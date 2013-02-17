@@ -1,0 +1,74 @@
+<html>
+<head> 
+<script src="http://connect.facebook.net/en_US/all.js"></script>
+<script type="text/javascript">
+function login(){
+   FB.api('/me', function(response) {
+      alert('You have successfully logged in, '+response.name+"!");
+   });
+}
+function logout(){
+   alert('You have successfully logged out!');
+}
+function action()
+{
+  FB.getLoginStatus(function(response)
+	{
+		if(response.authResponse)
+		{
+			var messg=
+			{
+				message: 'This is a test of Facebook Opengraph API via javascript SDK',
+				name: 'Facebook',
+				link: 'http://www.facebook.in',
+				description: 'The best place to screw around',
+				picture: ''
+			};
+			FB.api('/me/feed', 'post', messg ,function(response) 
+    {
+    if(!response || response.error)
+	{
+		alert("Shit happened");
+    }
+	else
+	{
+		alert("Shit success");
+	}
+  });
+
+		}
+		else
+		{
+			
+		}
+	})
+}
+</script>
+</head>
+<body>
+<fb:login-button autologoutlink='true'  perms='email,user_birthday,status_update,publish_stream'></fb:login-button>
+</fb:login-button>
+<div id="fb-root"></div>
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : 'use your app id here', 
+	  channelUrl : 'include the channel.php file from your server',
+      status     : true,
+      cookie     : true,
+      xfbml      : true
+    });
+
+    
+  };
+  (function(d, debug){
+     var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement('script'); js.id = id; js.async = true;
+     js.src = "//connect.facebook.net/en_US/all" + (debug ? "/debug" : "") + ".js";
+     ref.parentNode.insertBefore(js, ref);
+   }(document, /*debug*/ false));
+</script>
+<input type="button" name="action" value="action" onClick="action();" />
+</body>
+</html>
